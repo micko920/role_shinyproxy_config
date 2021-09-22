@@ -12,11 +12,13 @@ proxy:
   authentication: simple
   admin-groups: admins
   users:
-  - name: jack
-    password: password
-    groups: admins
-  - name: jeff
-    password: password
+{% for user in shinyproxy_users %}
+  - name: {{ user.name }}
+    password: {{ user.password }}
+  {% if user.groups is defined %}
+    groups: {{ user.groups }}
+  {% endif %}
+{% endfor %}
   docker:
 {% if docker_internal_network is defined and docker_internal_network and container_network != "" %}
       internal-networking: true

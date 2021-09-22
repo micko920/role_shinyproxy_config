@@ -9,3 +9,9 @@ shinyproxy_www_address: 0.0.0.0
 container_network: "backend"
 docker_internal_network: true
 url_context: "/"
+shinyproxy_users:
+  - name: jack
+    password: password
+    groups: admins
+  - name: jeff
+    password: password
