@@ -23,6 +23,7 @@
     owner: root
     group: root
     mode: 0644
+  notify: restart shinyproxy
 
 - name: Configure the shinyproxy service.
   systemd:
