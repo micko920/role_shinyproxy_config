@@ -1,0 +1,9 @@
+---
+__shinyproxy_version: "2.5.0"
+__shinyproxy_pkg: "shinyproxy_2.5.0_amd64.deb"
+__shinyproxy_pkg_url: "https://www.shinyproxy.io/downloads/shinyproxy_2.5.0_amd64.deb"
+__shinyproxy_url: "https://github.com/micko920/role_shinyproxy/raw/main/files/shinyproxy-2.5.0_patch-1.jar"
+__shinyproxy_bin_path: "/opt/shinyproxy"
+__shinyproxy_config_path: "/etc/shinyproxy"
+__shinyproxy_packages:
+  - tar

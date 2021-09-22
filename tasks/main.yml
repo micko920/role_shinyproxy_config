@@ -1,0 +1,32 @@
+---
+- include_tasks: is_systemd.yml
+
+# Variable configuration.
+- include_tasks: variables.yml
+
+- name: Add the shinyproxy group
+  group:
+    name: "{{ shinyproxy_group }}"
+    state: present
+
+- name: Add the shinyproxy user
+  user:
+    name: "{{ shinyproxy_user }}"
+    password_lock: true
+    shell: /bin/bash
+    append: true
+
+- name: configure | update (server) configuration file
+  template:
+    src: application.yml.j2
+    dest: /opt/shinyproxy/application.yml
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Configure the shinyproxy service.
+  systemd:
+    name: shinyproxy
+    state: "{{ shinyproxy_state }}"
+    enabled: "{{ shinyproxy_enabled_at_boot }}"
+  when: systemd_pid_1 is defined and systemd_pid_1

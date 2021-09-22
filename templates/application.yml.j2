@@ -1,0 +1,48 @@
+server:
+  servlet:
+{% if url_context is defined and url_context != "" %}
+    context-path: {{ url_context }}
+{% endif %}
+  forward-headers-strategy: native
+
+proxy:
+  title: Open Analytics Shiny Proxy
+  logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
+  port: {{ shinyproxy_www_port }}
+  authentication: simple
+  admin-groups: admins
+  users:
+  - name: jack
+    password: password
+    groups: admins
+  - name: jeff
+    password: password
+  docker:
+{% if docker_internal_network is defined and docker_internal_network and container_network != "" %}
+      internal-networking: true
+{% else %}
+      url: http://localhost:2375
+{% endif %}
+  specs:
+  - id: 01_hello
+    display-name: Hello Application
+    description: Application which demonstrates the basics of a Shiny app
+    container-cmd: ["R", "-e", "shinyproxy::run_01_hello()"]
+    container-image: openanalytics/shinyproxy-demo
+{% if docker_internal_network is defined and docker_internal_network and container_network != "" %}
+    container-network: {{ container_network }}
+{% endif %}
+  - id: 06_tabsets
+    container-cmd: ["R", "-e", "shinyproxy::run_06_tabsets()"]
+    container-image: openanalytics/shinyproxy-demo
+{% if docker_internal_network is defined and docker_internal_network and container_network != "" %}
+    container-network: {{ container_network }}
+{% endif %}
+
+logging:
+  file:
+    name: shinyproxy.log
+
+
+
+

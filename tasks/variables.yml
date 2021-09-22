@@ -1,0 +1,54 @@
+---
+# Variable configuration.
+- name: Check os and version
+  debug:
+    msg: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}"
+
+- name: Include OS-specific variables (Debian).
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_os_family == 'Debian'
+
+- name: Include OS-specific variables (RedHat).
+  include_vars: "{{ ansible_os_family }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when:
+  - ansible_os_family == 'RedHat'
+  - ansible_distribution != 'Fedora'
+
+- name: Include OS-specific variables (Fedora).
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version.split('.')[0] }}.yml"
+  when: ansible_distribution == 'Fedora'
+
+- name: Define shinyproxy_packages.
+  set_fact:
+    shinyproxy_packages: "{{ __shinyproxy_packages | list }}"
+  when: shinyproxy_packages is not defined
+
+- name: Define shinyproxy_pkg.
+  set_fact:
+    shinyproxy_pkg: "{{ __shinyproxy_pkg }}"
+  when: shinyproxy_pkg is not defined
+
+- name: Define shinyproxy_pkg_url.
+  set_fact:
+    shinyproxy_pkg_url: "{{ __shinyproxy_pkg_url }}"
+  when: shinyproxy_pkg_url is not defined
+
+- name: Define shinyproxy_url.
+  set_fact:
+    shinyproxy_url: "{{ __shinyproxy_url }}"
+  when: shinyproxy_url is not defined
+
+- name: Define shinyproxy_version.
+  set_fact:
+    shinyproxy_version: "{{ __shinyproxy_version }}"
+  when: shinyproxy_version is not defined
+
+- name: Define shinyproxy_bin_path.
+  set_fact:
+    shinyproxy_bin_path: "{{ __shinyproxy_bin_path }}"
+  when: shinyproxy_bin_path is not defined
+
+- name: Define shinyproxy_config_path.
+  set_fact:
+    shinyproxy_config_path: "{{ __shinyproxy_config_path }}"
+  when: shinyproxy_config_path is not defined

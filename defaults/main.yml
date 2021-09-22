@@ -1,0 +1,11 @@
+---
+shinyproxy_user: "shinyproxy"
+shinyproxy_group: "shinyproxy"
+shinyproxy_state: started
+shinyproxy_enabled_at_boot: true
+
+shinyproxy_www_port: 8082
+shinyproxy_www_address: 0.0.0.0
+container_network: "backend"
+docker_internal_network: true
+url_context: "/"
