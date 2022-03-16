@@ -14,7 +14,21 @@
     name: "{{ shinyproxy_user }}"
     password_lock: true
     shell: /bin/bash
+    group: "{{ shinyproxy_group }}"
+    groups: docker
     append: true
+
+- name: Create a network
+  docker_network:
+    name: "{{ container_network }}"
+
+- name: Make docker daemon listen to port when not internal network
+  lineinfile:
+    path: /etc/systemd/system/multi-user.target.wants/docker.service
+    regex: "ExecStart=.*"
+    line: "ExecStart=/usr/bin/dockerd -H fd:// -H tcp://127.0.0.1:2375 --containerd=/run/containerd/containerd.sock"
+  when: docker_internal_network is not defined or not docker_internal_network
+  notify: restart docker
 
 - name: configure | update (server) configuration file
   template:

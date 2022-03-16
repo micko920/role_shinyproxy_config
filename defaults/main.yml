@@ -3,18 +3,13 @@ shinyproxy_user: "shinyproxy"
 shinyproxy_group: "shinyproxy"
 shinyproxy_state: started
 shinyproxy_enabled_at_boot: true
-
+authentication: simple 
 shinyproxy_www_port: 8082
 shinyproxy_www_address: 0.0.0.0
 container_network: "backend"
 docker_internal_network: true
 url_context: "/"
-shinyproxy_users:
-  - name: jack
-    password: password
-    groups: admins
-  - name: jeff
-    password: password
+shinyproxy_users: []
 
 shinyproxy_specs:
   - id: 01_hello

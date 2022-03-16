@@ -9,7 +9,7 @@ proxy:
   title: Open Analytics Shiny Proxy
   logo-url: https://www.openanalytics.eu/shinyproxy/logo.png
   port: {{ shinyproxy_www_port }}
-  authentication: simple
+  authentication: {{ authentication }}
   admin-groups: admins
   users:
     {{ shinyproxy_users | to_nice_yaml | indent }}
